@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<pthread.h>
 
-#define NTHREADS 3
+#define NTHREADS 2 
 #define TAMVETOR 19
 
 int vetor[TAMVETOR] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 , 11, 12, 13, 14, 15, 16, 17, 18, 19 };
