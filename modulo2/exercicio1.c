@@ -49,7 +49,8 @@ int main(int argc, char* argv[]) {
 
     saida = (float *) malloc(sizeof(float) * dim * dim);
     if (saida == NULL) {printf("ERROR--malooc\n"); return 2;}
-
+    
+    GET_TIME(start);
     // inicializacao das estruturas
     for(int i=0; i<dim; i++){
         for(int j=0; j<dim; j++){
@@ -58,15 +59,17 @@ int main(int argc, char* argv[]) {
             saida[i*dim+j] = 0;
         }
     }
+    GET_TIME(finish);
+    elapsed = finish-start;
+    printf("Tempo de inicialização: %lf\n", elapsed);
 
+    GET_TIME(start);
     //multiplicacao
     tid = (pthread_t *) malloc(sizeof(pthread_t)*nthreads);
     if(tid==NULL) {puts("Error malloc"); return 2;}
     args = (tArgs *) malloc(sizeof(tArgs)*nthreads);
     if(args==NULL) {puts("Error malloc"); return 2;}    
-    
 
-    GET_TIME(start);
     for(int i=0; i<nthreads; i++){
         (args+i)->id = i;
         (args+i)->dim = dim;
@@ -75,15 +78,15 @@ int main(int argc, char* argv[]) {
             return 3;
         }
     }
-    
 
     for(int i=0; i<nthreads; i++){
         pthread_join(*(tid+i), NULL);
     }
+
     GET_TIME(finish);
 
     elapsed = finish-start;
-    printf("Tempo total: %lf\n", elapsed);
+    printf("Tempo de multiplicação: %lf\n", elapsed);
     
 /* Impressao das matrizes de entrada e saida
     puts("Matriz 1 de entrada:");
@@ -107,11 +110,16 @@ int main(int argc, char* argv[]) {
         puts("");
     }
 */
+
+    GET_TIME(start);
     free(mat1);
     free(mat2);
     free(saida);
     free(args);
     free(tid);
+    GET_TIME(finish);
+    elapsed = finish-start;
+    printf("Tempo de finalização: %lf\n", elapsed);
 
     return 0;
 }
