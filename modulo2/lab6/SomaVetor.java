@@ -70,12 +70,14 @@ public class SomaVetor{
         int dimensao;
 
         if(args.length < 2) {
-            System.out.println("");
+            System.out.println("Execute com: java SomaVetor <quantidade de threads> <tamanho do vetor>");
             return;
         }
         
         nThreads = Integer.parseInt(args[0]);
         dimensao =  Integer.parseInt(args[1]);
+
+        if(nThreads > dimensao){ nThreads=dimensao; }        
 
         Vetor A = new Vetor(dimensao);
         Vetor B = new Vetor(dimensao);
